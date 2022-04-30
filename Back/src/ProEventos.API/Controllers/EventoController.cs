@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ProEventos.API.Data;
 using ProEventos.API.Models;
 
 namespace ProEventos.API.Controllers
@@ -12,59 +13,52 @@ namespace ProEventos.API.Controllers
     [Route("api/[controller]")]
     public class EventoController : ControllerBase
     {
+        private readonly DataContext _context;
 
-
-        public EventoController()
+        public EventoController(DataContext context)
         {
-
+            this._context = context;
         }
 
-        [HttpDelete("{id}")]
-        public string Delete(int id)
+        [HttpDelete]
+        public void Delete(Guid id)
         {
-            return $"Delete id = {id} ";
+            Evento _evento = _context.Eventos.Where(e => e.Id == id).FirstOrDefault();
+            if (_evento == null)
+                throw new Exception("Evento não encontrado para exclusão"); 
+            _context.Remove(_evento);
+            _context.SaveChanges();
         }
 
-        [HttpPost("{id}")]
-        public string Post(int id)
+        [HttpPost]
+        public void Post(Evento evento)
         {
-            return $"Post id = {id} ";
+            evento.Id = Guid.NewGuid();
+            _context.Add(evento);
+            _context.SaveChanges();
         }
 
 
-        [HttpPut("{id}")]
-        public string Put(int id)
+        [HttpPut]
+        public void Put(Evento evento)
         {
-            return $"Put id = {id} ";
+            _context.Update(evento);
+            _context.SaveChanges();
         }
 
 
         [HttpGet]
         public IEnumerable<Evento> Get()
-        {
-            return new Evento[] { 
-                new Evento
-                {
-                    EventoId = 1,
-                    Tema = "Música",
-                    Local = "-23.649258052169333,-46.79044599616174",
-                    QtdPessoas = 10,
-                    DataEvento = DateTime.Now.AddDays(30),
-                    Lote = "Vip",
-                    ImagemUrl = "1"
-                },
-                new Evento
-                {
-                    EventoId = 1,
-                    Tema = "Internet",
-                    Local = "-23.649258052169333,-46.79044599616174",
-                    QtdPessoas = 120,
-                    DataEvento = DateTime.Now.AddDays(60),
-                    Lote = "1o Lote Público",
-                    ImagemUrl = "2"
-                },
-
-            };
+        {   
+            return _context.Eventos;
         }
+
+        [HttpGet("{id}")]
+        public IEnumerable<Evento> GetById(Guid id)
+        {   
+            return _context.Eventos.Where(e => e.Id == id);
+        }
+
+
     }
 }
