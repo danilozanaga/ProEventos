@@ -42,6 +42,11 @@ namespace ProEventos.API.Controllers
         [HttpPut]
         public void Put(Evento evento)
         {
+            if (evento is null)
+            {
+                throw new ArgumentNullException(nameof(evento));
+            }
+
             _context.Update(evento);
             _context.SaveChanges();
         }
