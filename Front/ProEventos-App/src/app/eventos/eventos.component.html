@@ -1,1 +1,15 @@
 <h1>Eventos component</h1>
+
+<table class ="table">
+  <tr class="thead-dark">
+    <th>Tema</th>
+    <th>Local</th>
+  </tr>
+  <tr *ngFor = "let evento of eventos">
+    <td>{{evento.local}}</td>
+    <td>{{evento.tema}}</td>
+  </tr>
+</table>
+
+
+
