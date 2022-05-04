@@ -1,15 +1,48 @@
-<h1>Eventos component</h1>
+<h2>Eventos</h2>
+<hr>
 
-<table class ="table">
-  <tr class="thead-dark">
+<form action="" class="form-inline">
+  <div class="form-group mb-2">
+    <input type="text" class="form-control mr2" placeholder="buscar">
+    <button class="btn btn-outline-sucess">Buscar</button>
+  </div>
+</form>
+
+<table class ="table table-striped">
+  <thead class="thead-dark">
+    <th>Imagem</th>
     <th>Tema</th>
     <th>Local</th>
-  </tr>
-  <tr *ngFor = "let evento of eventos">
+    <th>Data</th>
+    <th>Qtd Pessoas</th>
+    <th>Lote</th>
+  </thead>
+  <tbody *ngIf="eventos && eventos.length">
+    <tr *ngFor = "let evento of eventos">
+      <td>{{evento.imagemUrl}}</td>
+      <td>{{evento.tema}}</td>
+      <td>{{evento.local}}</td>
+      <td>{{evento.dataEvento | date:'dd/MM/yyyy'}}</td>
+      <td>{{evento.qtdPessoas}}</td>
+      <td>{{evento.lote}}</td>
+    </tr>
+  </tbody>
+  <tfoot *ngIf="!eventos">
+    <tr>
+      <td colspan="8" class="text-center">
+        <h4>Nenhum evento cadastrado</h4>
+      </td>
+    </tr>
+  </tfoot>
+  <!-- <tr *ngFor = "let evento of eventos">
     <td>{{evento.local}}</td>
     <td>{{evento.tema}}</td>
-  </tr>
+  </tr> -->
 </table>
+
+btnClick= function () {
+  this.router.navigateByUrl('/user');
+
 
 
 
