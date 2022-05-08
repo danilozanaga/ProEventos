@@ -2,12 +2,17 @@
   <h2>Eventos</h2>
   <hr>
 
-  <form action="" class="form-inline">
+  <div class="form-inline">
     <div class="form-group mb-2">
-      <input type="text" class="form-control mr2" placeholder="buscar">
+      <input
+        type="text"
+        class="form-control mr2"
+        placeholder="Buscar"
+        [(ngModel)]="filtroLista">
       <button class="btn btn-outline-sucess">Buscar</button>
     </div>
-  </form>
+  </div>
+  <h3>Filtro: {{filtroLista}}</h3>
 
   <table class ="table table-striped">
     <thead class="thead-dark">

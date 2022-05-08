@@ -13,6 +13,7 @@ export class EventosComponent implements OnInit {
   imgWidth: number = 180;
   imgMargin: number = 5;
   exibirImagem: boolean = true;
+  filtroLista: string = '';
 
   constructor(private http: HttpClient) {
 
