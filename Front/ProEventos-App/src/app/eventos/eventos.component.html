@@ -1,48 +1,58 @@
-<h2>Eventos</h2>
-<hr>
+<div>
+  <h2>Eventos</h2>
+  <hr>
 
-<form action="" class="form-inline">
-  <div class="form-group mb-2">
-    <input type="text" class="form-control mr2" placeholder="buscar">
-    <button class="btn btn-outline-sucess">Buscar</button>
-  </div>
-</form>
+  <form action="" class="form-inline">
+    <div class="form-group mb-2">
+      <input type="text" class="form-control mr2" placeholder="buscar">
+      <button class="btn btn-outline-sucess">Buscar</button>
+    </div>
+  </form>
 
-<table class ="table table-striped">
-  <thead class="thead-dark">
-    <th>Imagem</th>
-    <th>Tema</th>
-    <th>Local</th>
-    <th>Data</th>
-    <th>Qtd Pessoas</th>
-    <th>Lote</th>
-  </thead>
-  <tbody *ngIf="eventos && eventos.length">
-    <tr *ngFor = "let evento of eventos">
-      <td>{{evento.imagemUrl}}</td>
-      <td>{{evento.tema}}</td>
+  <table class ="table table-striped">
+    <thead class="thead-dark">
+      <th>
+        <button type="button" class="btn btn-outline-light btn-sm"
+          (click)="alterarImagem()">
+            {{ !exibirImagem ? 'exibir' : 'ocultar' }}
+        </button>
+      </th>
+      <th>Tema</th>
+      <th>Local</th>
+      <th>Data</th>
+      <th>Qtd Pessoas</th>
+      <th>Lote</th>
+    </thead>
+    <tbody *ngIf="eventos && eventos.length">
+      <tr *ngFor = "let evento of eventos">
+        <td>
+          <img [collapse]="!exibirImagem"
+               [isAnimated]="false"
+          src="{{evento.imagemUrl}}"
+          [style.width.px]="imgWidth"
+          [style.margin.px]="imgMargin"
+          >
+        </td>
+        <td>{{evento.tema}}</td>
+        <td>{{evento.local}}</td>
+        <td>{{evento.dataEvento | date:'dd/MM/yyyy'}}</td>
+        <td>{{evento.qtdPessoas}}</td>
+        <td>{{evento.lote}}</td>
+      </tr>
+    </tbody>
+    <tfoot *ngIf="!eventos">
+      <tr>
+        <td colspan="8" class="text-center">
+          <h4>Nenhum evento cadastrado</h4>
+        </td>
+      </tr>
+    </tfoot>
+    <!-- <tr *ngFor = "let evento of eventos">
       <td>{{evento.local}}</td>
-      <td>{{evento.dataEvento | date:'dd/MM/yyyy'}}</td>
-      <td>{{evento.qtdPessoas}}</td>
-      <td>{{evento.lote}}</td>
-    </tr>
-  </tbody>
-  <tfoot *ngIf="!eventos">
-    <tr>
-      <td colspan="8" class="text-center">
-        <h4>Nenhum evento cadastrado</h4>
-      </td>
-    </tr>
-  </tfoot>
-  <!-- <tr *ngFor = "let evento of eventos">
-    <td>{{evento.local}}</td>
-    <td>{{evento.tema}}</td>
-  </tr> -->
-</table>
-
-btnClick= function () {
-  this.router.navigateByUrl('/user');
-
+      <td>{{evento.tema}}</td>
+    </tr> -->
+  </table>
+</div>
 
 
 

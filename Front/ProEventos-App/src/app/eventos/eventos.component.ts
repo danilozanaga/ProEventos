@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
-
 @Component({
   selector: 'app-eventos',
   templateUrl: './eventos.component.html',
@@ -10,13 +9,22 @@ import { Component, OnInit } from '@angular/core';
 
 export class EventosComponent implements OnInit {
 
-
   public eventos: any = [];
+  imgWidth: number = 180;
+  imgMargin: number = 5;
+  exibirImagem: boolean = true;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+
+  }
 
   ngOnInit(): void {
+
     this.getEventos();
+  }
+
+  alterarImagem(){
+    this.exibirImagem = !this.exibirImagem;
   }
 
   public getEventos(): void{

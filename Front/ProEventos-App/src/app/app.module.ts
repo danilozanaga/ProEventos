@@ -15,7 +15,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
     AppComponent,
     EventosComponent,
     PalestrantesComponent,
-    NavComponent
+    NavComponent,
    ],
   imports: [
     BrowserModule,
