@@ -29,7 +29,7 @@
       <th>Lote</th>
     </thead>
     <tbody *ngIf="eventos && eventos.length">
-      <tr *ngFor = "let evento of eventos">
+      <tr *ngFor = "let evento of eventosFiltrados">
         <td>
           <img [collapse]="!exibirImagem"
                [isAnimated]="false"
