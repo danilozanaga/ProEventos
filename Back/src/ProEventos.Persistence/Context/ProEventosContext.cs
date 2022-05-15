@@ -36,8 +36,6 @@ namespace ProEventos.Persistence.Context
                 .HasMany(p => p.RedesSociais)
                 .WithOne(rs => rs.Palestrante)
                 .OnDelete(DeleteBehavior.Cascade);
-
-
         } 
     }
 }
