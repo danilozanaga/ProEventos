@@ -30,7 +30,7 @@ namespace ProEventos.Persistence.Models
                     .Include(e => e.PalestrantesEventos)
                     .ThenInclude(pe => pe.Evento);    
             }
-            query = query.OrderBy(e => e.Id);
+            query = query.AsNoTracking().OrderBy(e => e.Id);
             return await query.ToArrayAsync();    
         }
 
@@ -44,7 +44,7 @@ namespace ProEventos.Persistence.Models
                     .Include(e => e.PalestrantesEventos)
                     .ThenInclude(pe => pe.Evento);    
             }
-            query = query.OrderBy(e => e.Id).Where(p => p.Id == PalestranteId);
+            query = query.AsNoTracking().OrderBy(e => e.Id).Where(p => p.Id == PalestranteId);
             return await query.FirstOrDefaultAsync();    
         }
 
@@ -58,7 +58,7 @@ namespace ProEventos.Persistence.Models
                     .Include(e => e.PalestrantesEventos)
                     .ThenInclude(pe => pe.Evento);    
             }
-            query = query.OrderBy(e => e.Id).Where(p => p.Nome.ToLower().Contains(nome.ToLower()));
+            query = query.AsNoTracking().OrderBy(e => e.Id).Where(p => p.Nome.ToLower().Contains(nome.ToLower()));
             return await query.ToArrayAsync();    
         }
 

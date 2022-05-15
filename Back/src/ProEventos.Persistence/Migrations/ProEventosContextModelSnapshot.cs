@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ProEventos.Persistence;
 using ProEventos.Persistence.Context;
 
 namespace ProEventos.Persistence.Migrations
@@ -19,9 +18,9 @@ namespace ProEventos.Persistence.Migrations
 
             modelBuilder.Entity("ProEventos.Domain.Evento", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("DataEvento")
                         .HasColumnType("TEXT");
@@ -64,9 +63,6 @@ namespace ProEventos.Persistence.Migrations
                     b.Property<int>("EventoId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid?>("EventoId1")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Nome")
                         .HasColumnType("TEXT");
 
@@ -78,7 +74,7 @@ namespace ProEventos.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EventoId1");
+                    b.HasIndex("EventoId");
 
                     b.ToTable("Lotes");
                 });
@@ -117,12 +113,7 @@ namespace ProEventos.Persistence.Migrations
                     b.Property<int>("PalestranteId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid?>("EventoId1")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("EventoId", "PalestranteId");
-
-                    b.HasIndex("EventoId1");
 
                     b.HasIndex("PalestranteId");
 
@@ -138,9 +129,6 @@ namespace ProEventos.Persistence.Migrations
                     b.Property<int?>("EventoId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid?>("EventoId1")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Nome")
                         .HasColumnType("TEXT");
 
@@ -152,7 +140,7 @@ namespace ProEventos.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EventoId1");
+                    b.HasIndex("EventoId");
 
                     b.HasIndex("PalestranteId");
 
@@ -163,7 +151,9 @@ namespace ProEventos.Persistence.Migrations
                 {
                     b.HasOne("ProEventos.Domain.Evento", "Evento")
                         .WithMany("Lotes")
-                        .HasForeignKey("EventoId1");
+                        .HasForeignKey("EventoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Evento");
                 });
@@ -172,10 +162,12 @@ namespace ProEventos.Persistence.Migrations
                 {
                     b.HasOne("ProEventos.Domain.Evento", "Evento")
                         .WithMany("PalestrantesEventos")
-                        .HasForeignKey("EventoId1");
+                        .HasForeignKey("EventoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ProEventos.Domain.Palestrante", "Palestrante")
-                        .WithMany()
+                        .WithMany("PalestrantesEventos")
                         .HasForeignKey("PalestranteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -189,7 +181,7 @@ namespace ProEventos.Persistence.Migrations
                 {
                     b.HasOne("ProEventos.Domain.Evento", "Evento")
                         .WithMany("RedesSociais")
-                        .HasForeignKey("EventoId1");
+                        .HasForeignKey("EventoId");
 
                     b.HasOne("ProEventos.Domain.Palestrante", "Palestrante")
                         .WithMany("RedesSociais")
@@ -211,6 +203,8 @@ namespace ProEventos.Persistence.Migrations
 
             modelBuilder.Entity("ProEventos.Domain.Palestrante", b =>
                 {
+                    b.Navigation("PalestrantesEventos");
+
                     b.Navigation("RedesSociais");
                 });
 #pragma warning restore 612, 618
