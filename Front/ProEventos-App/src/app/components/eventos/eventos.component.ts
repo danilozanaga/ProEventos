@@ -1,8 +1,8 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, Inject, OnInit, TemplateRef } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Evento } from '../interface/Evento';
-import { EventoService } from '../services/evento.service';
+import { Evento } from '../../interface/Evento';
+import { EventoService } from '../../services/evento.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
