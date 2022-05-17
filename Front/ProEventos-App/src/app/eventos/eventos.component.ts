@@ -1,61 +1,85 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Evento } from '../interface/Evento';
+import { EventoService } from '../services/evento.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-eventos',
   templateUrl: './eventos.component.html',
-  styleUrls: ['./eventos.component.scss']
+  styleUrls: ['./eventos.component.scss'],
 })
 
 export class EventosComponent implements OnInit {
+  modalRef?: BsModalRef;
+  public eventos: Evento[] = [];
+  public eventosFiltrados: Evento[] = [];
 
-  public eventos: any = [];
-  public eventosFiltrados: any = [];
-
-  imgWidth: number = 180;
-  imgMargin: number = 5;
-  exibirImagem: boolean = true;
-  private _filtroLista: string = '';
-
-
+  public imgWidth: number = 180;
+  public imgMargin: number = 5;
+  public exibirImagem: boolean = true;
+  public _filtroLista: string = '';
 
   public get filtroLista(): string {
     return this._filtroLista;
   }
 
   public set filtroLista(value: string) {
-    this._filtroLista  = value;
-    this.eventosFiltrados = (this.filtroLista ? this.filtrarEventos(this.filtroLista) : this.eventos );
+      this._filtroLista  = value;
+      this.eventosFiltrados = (this.filtroLista ? this.filtrarEventos(this.filtroLista) : this.eventos );
   }
 
-  filtrarEventos(filtrarPor: string): any {
+  public filtrarEventos(filtrarPor: string): any {
     filtrarPor = filtrarPor.toLocaleLowerCase();
     return this.eventos.filter(
-      (evento: any) => evento.tema.toLocaleLowerCase().indexOf(filtrarPor) !== -1 ||
+      (evento: {tema: string; local: string}) => evento.tema.toLocaleLowerCase().indexOf(filtrarPor) !== -1 ||
       evento.local.toLocaleLowerCase().indexOf(filtrarPor) !== -1
     )
   }
 
-  constructor(private http: HttpClient) {
-
-  }
+  constructor(
+    private eventoService: EventoService,
+    private modalService: BsModalService,
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
+    this.spinner.show();
     this.getEventos();
   }
 
-  alterarImagem(){
+  public alterarImagem(){
     this.exibirImagem = !this.exibirImagem;
   }
 
   public getEventos(): void{
-    this.http.get('http://localhost:5000/api/Eventos').subscribe(
-      response => {
-        this.eventos = response;
-        this.eventosFiltrados = this.eventos;
+    const observer = {
+      next: (eventos: Evento[]) => {
+        this.eventos = eventos,
+        this.eventosFiltrados = eventos
       },
-      error => console.log(error));
+      error: (error: any) => {
+        this.spinner.hide();
+        this.toastr.error('Erro ao carregar os eventos!', 'Erro!');
+        console.log(error)
+      },
+      complete: () => this.spinner.hide()
+    }
+    this.eventoService.getEvento().subscribe(observer);
   }
 
+  openModal(template: TemplateRef<any>): void {
+    this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+  }
+
+  confirm(): void {
+    this.modalRef?.hide();
+    this.toastr.success('O evento foi excluido com sucesso!', 'Deletado!');
+  }
+
+  decline(): void {
+    this.modalRef?.hide();
+  }
 
 }
