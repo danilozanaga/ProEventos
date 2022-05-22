@@ -1,3 +1,5 @@
+import { EventoListaComponent } from './components/eventos/evento-lista/evento-lista.component';
+import { EventoDetalheComponent } from './components/eventos/evento-detalhe/evento-detalhe.component';
 import { TituloComponent } from './shared/titulo/titulo.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
@@ -29,6 +31,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ContatosComponent,
     DashboardComponent,
     EventosComponent,
+    EventoDetalheComponent,
+    EventoListaComponent,
     PalestrantesComponent,
     PerfilComponent,
     TituloComponent,
