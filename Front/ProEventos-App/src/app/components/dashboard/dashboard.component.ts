@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  @Input() ipAddress: string = '';
+  constructor(private http:HttpClient) { }
 
   ngOnInit() {
+    this.getIPAddress();
+  }
+  
+    getIPAddress()
+    {    
+      this.http.get("http://api.ipify.org/?format=json").subscribe((res:any)=>{
+      this.ipAddress = res.ip;
+    });
+  
+
   }
 
 }

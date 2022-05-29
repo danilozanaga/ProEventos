@@ -62,3 +62,4 @@ import { NgxSpinnerModule } from 'ngx-spinner';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule { }
+
