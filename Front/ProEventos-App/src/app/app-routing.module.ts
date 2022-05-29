@@ -11,6 +11,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { EventoDetalheComponent } from './components/eventos/evento-detalhe/evento-detalhe.component';
 
 const routes: Routes = [
+  {path: 'eventos',redirectTo: 'eventos/lista'},
   {
     path: 'eventos', component: EventosComponent,
     children: [
