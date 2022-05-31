@@ -14,17 +14,24 @@ export class DashboardComponent implements OnInit {
   constructor(private http:HttpClient) { }
 
   ngOnInit() {
-    this.getIPAddress();    
+    this.getIPAddress();   
+    this.getLocalIPAddress();     
   }
   
-    getIPAddress()
-    {    
+  getIPAddress()
+  {    
       this.http.get("http://api.ipify.org/?format=json").subscribe(async (res:any)=>{
       this.ipAddress = res.ip;
-      console.log(await internalIpV4());
-    });
-  
-
+    });    
   }
+
+  getLocalIPAddress()
+  {    
+      this.http.get("http://localhost:5000/api/HttpConnection",{responseType: 'text'}).subscribe(async (data:any) => {
+      this.localAdress = data;
+      console.log(data)
+    });    
+  }
+ 
 
 }
