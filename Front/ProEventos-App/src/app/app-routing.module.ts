@@ -9,6 +9,7 @@ import { EventosComponent } from './components/eventos/eventos.component';
 import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EventoDetalheComponent } from './components/eventos/evento-detalhe/evento-detalhe.component';
+import { ConnectComponent } from './components/connect/connect.component';
 
 const routes: Routes = [
   {path: 'eventos',redirectTo: 'eventos/lista'},
@@ -20,6 +21,7 @@ const routes: Routes = [
       { path: 'lista',component: EventoListaComponent },
     ]
   },
+  {path: 'connect', component: ConnectComponent},
   {path: 'dashboard', component: DashboardComponent},
   {path: 'palestrantes', component: PalestrantesComponent},
   {path: 'perfil', component: PerfilComponent},

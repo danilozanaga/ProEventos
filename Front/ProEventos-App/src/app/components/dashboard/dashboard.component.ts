@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import {internalIpV6, internalIpV4} from 'internal-ip';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,11 +10,13 @@ export class DashboardComponent implements OnInit {
 
   @Input() ipAddress: string = '';
   @Input() localAdress: any;
+  @Input() localhost: any;
   constructor(private http:HttpClient) { }
 
   ngOnInit() {
     this.getIPAddress();   
-    this.getLocalIPAddress();     
+    this.getLocalIPAddress();   
+    this.getHostName();  
   }
   
   getIPAddress()
@@ -27,11 +28,19 @@ export class DashboardComponent implements OnInit {
 
   getLocalIPAddress()
   {    
-      this.http.get("http://localhost:5000/api/HttpConnection",{responseType: 'text'}).subscribe(async (data:any) => {
+      this.http.get("http://localhost:5000/api/HttpConnection/getlocalip",{responseType: 'text'}).subscribe(async (data:any) => {
       this.localAdress = data;
       console.log(data)
     });    
   }
  
+  getHostName()
+  {    
+      this.http.get("http://localhost:5000/api/HttpConnection/getlocalhost",{responseType: 'text'}).subscribe(async (data:any) => {
+      this.localhost = data;
+      console.log(data)
+    });    
+  }
+
 
 }

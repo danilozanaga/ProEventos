@@ -12,7 +12,8 @@ namespace ProEventos.API.Controllers
 	{
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        [Route("getlocalip")]
+        public async Task<IActionResult> GetLocalIp()
         {
             string localIP = "";
             try
@@ -25,7 +26,7 @@ namespace ProEventos.API.Controllers
                     if (ip.AddressFamily.ToString() == "InterNetwork")
                     {
                         if (ip.ToString() != "::1" && ip.ToString() != "127.0.0.1")
-                        localIP = ip.ToString();
+                            localIP = ip.ToString();
                     }
                 }
                 return Ok(localIP);
@@ -35,6 +36,57 @@ namespace ProEventos.API.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao recuperar conexão: {ex.Message}");
             }
         }
+
+        [HttpGet]
+        [Route("getexternalip")]
+        public async Task<IActionResult> GetExternalIp()
+        {
+            string externalIP = "";
+            try
+            {
+                IPHostEntry host;
+                host = Dns.GetHostEntry(Dns.GetHostName());
+                var addressList = host.AddressList;
+                foreach (IPAddress ip in host.AddressList)
+                {
+                    if (ip.AddressFamily.ToString() == "InterNetworkV4")
+                    {
+                        if (ip.ToString() != "::1" && ip.ToString() != "127.0.0.1")
+                            externalIP = ip.ToString();
+                    }
+                }
+                return Ok(externalIP);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao recuperar conexão: {ex.Message}");
+            }
+        }
+
+
+        [HttpGet]
+        [Route("getlocalhost")]
+        public async Task<IActionResult> GetLocalHost()
+        {
+            string hostName = "";
+            try
+            {
+                IPHostEntry host;
+                host = Dns.GetHostEntry(Dns.GetHostName());
+
+                hostName = host.HostName;
+
+                var addressList = host.AddressList;
+
+                return Ok(hostName);
+            }
+            catch (Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao recuperar host: {ex.Message}");
+            }
+        }
+
+
     }
 }
 
