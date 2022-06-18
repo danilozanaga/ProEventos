@@ -13,7 +13,7 @@ namespace ProEventos.API.Controllers
 
         [HttpGet]
         [Route("getlocalip")]
-        public async Task<IActionResult> GetLocalIp()
+        public  IActionResult GetLocalIp()
         {
             string localIP = "";
             try
@@ -39,7 +39,7 @@ namespace ProEventos.API.Controllers
 
         [HttpGet]
         [Route("getexternalip")]
-        public async Task<IActionResult> GetExternalIp()
+        public  IActionResult GetExternalIp()
         {
             string externalIP = "";
             try
@@ -66,7 +66,7 @@ namespace ProEventos.API.Controllers
 
         [HttpGet]
         [Route("getlocalhost")]
-        public async Task<IActionResult> GetLocalHost()
+        public IActionResult GetLocalHost()
         {
             string hostName = "";
             try

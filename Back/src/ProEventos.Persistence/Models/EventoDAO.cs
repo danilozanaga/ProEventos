@@ -10,15 +10,11 @@ using ProEventos.Persistence.Models;
 
 namespace ProEventos.Persistence.Interfaces
 {
-    public class EventoDAO :  IEvento
+    public class EventoDAO :  IEvento 
     {
         private readonly ProEventosContext _context;
 
-        public EventoDAO(ProEventosContext context) 
-        {
-            this._context = context;
-            //_context.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-        }
+
 
         public async Task<Evento> GetAllEventosByIdAsync(int EventoId, bool includePalestrantes = false)
         {
@@ -45,7 +41,7 @@ namespace ProEventos.Persistence.Interfaces
                     .ThenInclude(pe => pe.Palestrante);    
             }
             query = query.AsNoTracking().OrderBy(e => e.Id).Where(e => e.Tema.ToLower().Contains(tema.ToLower()));
-            return await query.ToArrayAsync();    
+            return await query.ToArrayAsync();
         }
 
         public async Task<Evento[]> GetAllEventosAsync(bool includePalestrantes)
